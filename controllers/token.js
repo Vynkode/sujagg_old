@@ -12,4 +12,8 @@ const getToken = (axios, twitchApp, options) => (req, res) => {
     .catch(err => console.log(err));
 };
 
-module.exports = { getToken: getToken };
+const showToken = twitchApp => (req, res) => {
+  console.log(twitchApp.token);
+};
+
+module.exports = { getToken: getToken, showToken: showToken };

@@ -24,6 +24,7 @@ const twitchApp = {
 };
 
 app.get('/getToken', tokenRoute.getToken(axios, twitchApp, options));
+app.get('/showToken', tokenRoute.showToken(twitchApp));
 
 //SEARCH CHANNEL
 // axios
