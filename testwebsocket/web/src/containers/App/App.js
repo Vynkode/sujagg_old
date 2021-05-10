@@ -2,7 +2,7 @@ import TextField from '@material-ui/core/TextField';
 import React, { useEffect, useRef, useState } from 'react';
 import io from 'socket.io-client';
 import './App.css';
-import Test from './components/Test';
+import Test from '../../components/Test';
 
 function App() {
   const [state, setState] = useState({ message: '', name: '' });
