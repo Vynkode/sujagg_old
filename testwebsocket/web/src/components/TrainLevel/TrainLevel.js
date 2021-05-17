@@ -26,7 +26,7 @@ const TrainLevel = ({ socket, level }) => {
 
   return (
     <div className={`train train${level} ${active > 0 ? 'active' : ''}`}>
-      <Progress />
+      <Progress level={level} />
     </div>
   );
 };

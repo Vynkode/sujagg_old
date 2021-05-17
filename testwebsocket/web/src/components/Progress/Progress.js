@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import io from 'socket.io-client';
 
-const Progress = () => {
+const Progress = ({ level }) => {
   const [progress, setProgress] = useState(0);
 
   const socketRef = useRef();

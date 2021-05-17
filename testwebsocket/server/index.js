@@ -1,6 +1,8 @@
 const app = require('express')();
 const http = require('http').createServer(app);
 const bodyParser = require('body-parser');
+const fs = require('fs');
+const path = require('path');
 
 // const cors = require('cors');
 
@@ -8,16 +10,28 @@ let level = 0;
 
 const io = require('socket.io')(http, {
   cors: {
-    origin: 'http://localhost:3000',
+    origin: '*',
     methods: ['GET', 'POST'],
   },
 });
 // app.use(cors());
 app.use(bodyParser.json());
 
+const saveSocketConnection = socket => {
+  const connections = JSON.parse(
+    fs.readFileSync(path.join(__dirname, 'socketConnections.json'))
+  );
+  const newSocket = { id: socket.id, time: socket.handshake.time };
+  connections.connections.push(newSocket);
+  fs.writeFileSync(
+    path.join(__dirname, 'socketConnections.json'),
+    JSON.stringify(connections)
+  );
+};
+
 io.on('connection', socket => {
   console.log(`Nuevo socket: ${socket.id}`);
-
+  saveSocketConnection(socket);
   socket.on('disconnect', () => {
     console.log(`Se ha desconectado ${socket.id}`);
   });

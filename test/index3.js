@@ -7,10 +7,10 @@ This is a NodeJS example
 const fs = require('fs');
 const path = require('path');
 
-// Load configuation
+// Load configuration
 const config = JSON.parse(fs.readFileSync(path.join(__dirname, 'config.json')));
 
-// Require depedancies
+// Require dependencies
 // express is used for handling incoming HTTP requests "like a webserver"
 const express = require('express');
 // bodyparser is for reading incoming data
@@ -33,7 +33,10 @@ app.use(
     verify: function (req, res, buf, encoding) {
       // is there a hub to verify against
       req.twitch_hub = false;
-      if (req.headers && req.headers.hasOwnProperty('twitch-eventsub-message-signature')) {
+      if (
+        req.headers &&
+        req.headers.hasOwnProperty('twitch-eventsub-message-signature')
+      ) {
         req.twitch_hub = true;
 
         // id for dedupe
@@ -77,7 +80,10 @@ app
     // so check if we event generated a twitch_hub
     if (req.twitch_hub) {
       // is it a verification request
-      if (req.headers['twitch-eventsub-message-type'] == 'webhook_callback_verification') {
+      if (
+        req.headers['twitch-eventsub-message-type'] ==
+        'webhook_callback_verification'
+      ) {
         // it's a another check for if it's a challenge request
         if (req.body.hasOwnProperty('challenge')) {
           // we can validate the signature here so we'll do that
@@ -94,7 +100,9 @@ app
         // you should probably do something more useful here
         // than this example does
         res.send('Ok');
-      } else if (req.headers['twitch-eventsub-message-type'] == 'notification') {
+      } else if (
+        req.headers['twitch-eventsub-message-type'] == 'notification'
+      ) {
         if (req.twitch_hex == req.twitch_signature) {
           console.log('The signature matched');
           // the signature passed so it should be a valid payload from Twitch
