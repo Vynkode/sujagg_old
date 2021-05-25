@@ -3,7 +3,7 @@ const bodyParser = require('body-parser');
 const axios = require('axios');
 const fs = require('fs');
 
-const app = express();
+const server = express();
 const PORT = 3000;
 
 //UTILS & DATA
@@ -13,7 +13,7 @@ const { options } = require('./utils/options');
 const tokenRoute = require('./controllers/token');
 
 //MIDDLEWARE
-app.use(bodyParser.json());
+server.use(bodyParser.json());
 
 const twitchApp = {
   clientId: 'a4004wvruwzyyzvsxidyypk3qy9t15',
@@ -23,8 +23,8 @@ const twitchApp = {
   token: 'Bearer i1y94zo62ipnly2corso00jbibrq45',
 };
 
-app.get('/getToken', tokenRoute.getToken(axios, twitchApp, options));
-app.get('/showToken', tokenRoute.showToken(twitchApp));
+server.get('/getToken', tokenRoute.getToken(axios, twitchApp, options));
+server.get('/showToken', tokenRoute.showToken(twitchApp));
 
 //SEARCH CHANNEL
 // axios
@@ -107,9 +107,9 @@ function subsHypeTrain() {
   });
 }
 
-app.post('/hook', (req, res) => {
+server.post('/hook', (req, res) => {
   console.log(req.body);
   res.sendStatus(200).end();
 });
 
-app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));
+server.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));
